@@ -29,7 +29,7 @@ export function Home(){
 
     useEffect(() => {
         function getData(){
-            fetch('https://sujeitoprogramador.com/api-cripto/?key=0abe79ac46fbb6e8&pref=BRL')
+            fetch('https://sujeitoprogramador.com/api-cripto/?key=0abe79ac46fbb6e8')
             .then(response => response.json())
             .then((data: DataProps) => {
                 let coinsData = data.coins.slice(0,15)
