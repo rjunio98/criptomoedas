@@ -1,10 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react'
 
-import styles from './home.module.css'
-
 import { Link, useNavigate } from 'react-router-dom'
 
 import { BiSearch } from 'react-icons/bi'
+
+import styles from './home.module.css'
 
 // 0abe79ac46fbb6e8
 interface CoinProps {
@@ -16,6 +16,7 @@ interface CoinProps {
     market_cap: string;
     formatedPrice: string;
     formatedMarket: string;
+    numberDelta?: number;
 }
 
 interface DataProps {
@@ -45,6 +46,7 @@ export function Home(){
                         ...item,
                         formatedPrice: price.format(Number(item.price)),
                         formatedMarket: price.format(Number(item.market_cap)),
+                        numberDelta: parseFloat(item.delta_24h.replace(",", "."))
                     }
 
                     return formated
@@ -103,7 +105,7 @@ export function Home(){
                             {coin.formatedPrice}
                         </td>
 
-                        <td className={Number(coin?.delta_24h) >= 0 ? styles.tdProfit : styles.tdLoss} data-label="Volume">
+                        <td className={coin.numberDelta && coin.numberDelta >= 0 ? styles.tdProfit : styles.tdLoss} data-label="Volume">
                             <span>{coin.delta_24h}</span>
                         </td>
                     </tr>
