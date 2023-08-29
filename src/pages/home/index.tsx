@@ -1,11 +1,62 @@
+import { useEffect, useState } from 'react'
+
 import styles from './home.module.css'
 
 import { Link } from 'react-router-dom'
 
 import { BiSearch } from 'react-icons/bi'
 
+// 0abe79ac46fbb6e8
+interface CoinProps {
+    name: string;
+    delta_24h: string;
+    price: string;
+    syboml: string;
+    volume_24h: string;
+    market_cap: string;
+    formatedPrice: string;
+    formatedMarket: string;
+}
+
+interface DataProps {
+    coins: CoinProps[];
+}
 
 export function Home(){
+    const [ coins, setCoins ] = useState<CoinProps[]>([])
+
+    useEffect(() => {
+        function getData(){
+            fetch('https://sujeitoprogramador.com/api-cripto/?key=0abe79ac46fbb6e8&pref=BRL')
+            .then(response => response.json())
+            .then((data: DataProps) => {
+                let coinsData = data.coins.slice(0,15)
+
+                let price = Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                })
+
+
+                const formatResult = coinsData.map((item) => {
+                    const formated = {
+                        ...item,
+                        formatedPrice: price.format(Number(item.price)),
+                        formatedMarket: price.format(Number(item.market_cap)),
+                    }
+
+                    return formated
+                })
+
+                setCoins(formatResult)
+            })
+        }
+
+        getData()
+
+    }, [])
+
+
     return (
         <main className={styles.container}>
             <form className={styles.form}>
