@@ -4,8 +4,11 @@ import { Home } from './pages/home/index'
 import { Detail } from './pages/detail/index'
 import { Notfound } from './pages/notfound/index'
 
+import { Layout } from './components/layout/index'
+
 const router = createBrowserRouter([
     {
+        element: <Layout/>,
         children:[
             {
                 path: "/",
