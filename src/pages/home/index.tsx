@@ -79,25 +79,27 @@ export function Home(){
                 </thead>
 
                 <tbody id='tbody'>
-                    <tr className={styles.tr}>
+                    {coins.map((coin) => (
+                        <tr key={coin.name} className={styles.tr}>
                         <td className={styles.tdLabel} data-label="Moeda">
-                            <Link to="/detail/btc" className={styles.link}>
-                                <span>Bitcoin</span> | BTC
+                            <Link to={`/detail/${coin.syboml}`} className={styles.link}>
+                                <span>{coin.name}</span> | {coin.syboml}
                             </Link>
                         </td>
 
                         <td className={styles.tdLabel} data-label="Mercado">
-                            R$ 1928
+                            {coin.formatedMarket}
                         </td>
 
                         <td className={styles.tdLabel} data-label="Preço">
-                            R$ 40.5985
+                            {coin.formatedPrice}
                         </td>
 
-                        <td className={styles.tdProfit} data-label="Volume">
-                            <span>-5.4</span>
+                        <td className={Number(coin?.delta_24h) >= 0 ? styles.tdProfit : styles.tdLoss} data-label="Volume">
+                            <span>{coin.delta_24h}</span>
                         </td>
                     </tr>
+                    ))}
                 </tbody>
             </table>
 
